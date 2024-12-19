@@ -35,7 +35,7 @@ html, body {
 
 .Container {
   display: grid;
-  grid-template-columns: 15% 85%;
+  grid-template-columns: 10% 90%;
   width: 100%;
   padding-right: 1rem;
   border-radius: 1rem;

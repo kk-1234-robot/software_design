@@ -1,6 +1,7 @@
 <script setup>
 import {defineProps} from 'vue';
 import Home_content from "@/components/Home_content.vue";
+import Tasks from "@/components/Tasks.vue";
 
 // 从父组件接收 selectedContent
 const props = defineProps({
@@ -21,7 +22,7 @@ const props = defineProps({
         <Home_content/>
       </div>
       <div v-else-if="selectedContent === 'tasks'">
-        <p>标注任务内容</p>
+        <Tasks/>
       </div>
       <div v-else-if="selectedContent === 'marking'">
         <p>标注内容</p>
