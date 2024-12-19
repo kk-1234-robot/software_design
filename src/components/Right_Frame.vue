@@ -1,0 +1,64 @@
+<script setup>
+import {defineProps} from 'vue';
+
+// 从父组件接收 selectedContent
+const props = defineProps({
+  selectedContent: {
+    type: String,
+    required: true
+  }
+});
+</script>
+
+<template>
+  <div class="Right_Frame">
+    <div class="top">
+      <i class="iconfont icon-font"></i>
+    </div>
+    <div class="bottom">
+      <div v-if="selectedContent === 'home'">
+        <p>首页内容</p>
+      </div>
+      <div v-else-if="selectedContent === 'tasks'">
+        <p>标注任务内容</p>
+      </div>
+      <div v-else-if="selectedContent === 'marking'">
+        <p>标注内容</p>
+      </div>
+      <div v-else>
+        <p>请选择一个菜单项</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.Right_Frame {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.top {
+  display: flex;
+  justify-content: flex-end; /* 将子元素推到右边 */
+  align-items: center; /* 垂直居中对齐 */
+  height: 15%; /* 设置顶部区域的高度 */
+  padding-right: 1rem; /* 可选：设置右侧内边距 */
+  background-color: floralwhite;
+}
+
+.Right_Frame .top i {
+  font-size: 30px; /* 设置图标大小 */
+  color: #2c3e50; /* 设置图标颜色 */
+  cursor: pointer; /* 改变鼠标为手型 */
+  transition: color 0.3s ease, transform 0.3s ease; /* 平滑过渡效果 */
+}
+
+.bottom {
+  height: 85%;
+  background-color: antiquewhite;
+  border-radius: 0 0 1rem 0;
+}
+
+</style>
