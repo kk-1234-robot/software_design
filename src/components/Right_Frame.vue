@@ -1,5 +1,6 @@
 <script setup>
 import {defineProps} from 'vue';
+import Home_content from "@/components/Home_content.vue";
 
 // 从父组件接收 selectedContent
 const props = defineProps({
@@ -17,7 +18,7 @@ const props = defineProps({
     </div>
     <div class="bottom">
       <div v-if="selectedContent === 'home'">
-        <p>首页内容</p>
+        <Home_content/>
       </div>
       <div v-else-if="selectedContent === 'tasks'">
         <p>标注任务内容</p>
@@ -57,7 +58,7 @@ const props = defineProps({
 
 .bottom {
   height: 85%;
-  background-color: antiquewhite;
+  background-color: white;
   border-radius: 0 0 1rem 0;
 }
 
