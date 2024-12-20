@@ -1,25 +1,35 @@
-<script setup>
-import Step from './Step.vue';
-</script>
-
 <template>
-  <div class="Container">
-    <Step :stepNumber="1" stepText="First step content"/>
-    <Step :stepNumber="2" stepText="Second step content"/>
-    <Step :stepNumber="3" stepText="Third step content"/>
+  <div>
+    <a-steps
+        v-model:current="current"
+        direction="vertical"
+        size="default"
+        :items="[
+        {
+          title: 'Step 1',
+          description: 'This is description 1 This is description 1 This is description 1 This is description 1 This is description 1 This is description 1 This is description 1' +
+           ' This is description 1 This is description 1 This is description 1 This is description 1 This is description 1 This is description 1 This is description 1 This is description 1 This is description 1' +
+            ' This is description 1 This is description 1 This is description 1 This is description 1 This is description 1 This is description 1',
+        },
+        {
+          title: 'Step 2',
+          description: 'This is description 2',
+        },
+        {
+          title: 'Step 3',
+          description: 'This is description 3',
+        },
+      ]"
+    ></a-steps>
   </div>
 </template>
+<script lang="ts" setup>
+import {ref} from 'vue';
+
+const current = ref<number>(0);
+
+</script>
 
 <style scoped>
-.Container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5%;
-  height: 100%;
-  background-color: white;
-}
-
 
 </style>
