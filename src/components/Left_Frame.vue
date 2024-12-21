@@ -32,16 +32,16 @@ function changeContent(content) {
 <style scoped>
 
 .Left_Frame {
-  display: flex;
+  display: grid;
   height: 100vh;
   width: 100%;
   background-color: #2c3e50;
   gap: 10px;
-  flex-direction: column;
+  grid-template-rows: 10% 10% 10%; /* 将容器分为三行 */
 }
 
 .Left_Frame i {
-  height: 10%; /* 每个 <i> 元素占容器的 10% 高度 */
+  height: 20%; /* 每个 <i> 元素占容器的 10% 高度 */
   width: 100%;
   display: flex; /* 使 <i> 元素可灵活使用对齐方式 */
   align-items: center; /* 垂直居中对齐图标和文本 */

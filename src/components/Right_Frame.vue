@@ -2,6 +2,7 @@
 import {defineProps} from 'vue';
 import Home_content from "@/components/Home_content.vue";
 import Tasks from "@/components/Tasks.vue";
+import Mark from "@/components/Mark.vue";
 
 // 从父组件接收 selectedContent
 const props = defineProps({
@@ -25,7 +26,7 @@ const props = defineProps({
         <Tasks/>
       </div>
       <div v-else-if="selectedContent === 'marking'">
-        <p>标注内容</p>
+        <Mark/>
       </div>
       <div v-else>
         <p>请选择一个菜单项</p>
@@ -36,8 +37,8 @@ const props = defineProps({
 
 <style scoped>
 .Right_Frame {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 10% 90%;
   height: 100%;
 }
 
@@ -45,7 +46,7 @@ const props = defineProps({
   display: flex;
   justify-content: flex-end; /* 将子元素推到右边 */
   align-items: center; /* 垂直居中对齐 */
-  height: 15%; /* 设置顶部区域的高度 */
+  height: 100%; /* 设置顶部区域的高度 */
   padding-right: 1rem; /* 可选：设置右侧内边距 */
   background-color: floralwhite;
 }
@@ -58,9 +59,15 @@ const props = defineProps({
 }
 
 .bottom {
-  height: 85%;
+  height: 100%;
   background-color: white;
   border-radius: 0 0 1rem 0;
+}
+
+@media (min-width: 1024px) {
+  .Right_Frame {
+    grid-template-rows: 10% 90%;
+  }
 }
 
 </style>

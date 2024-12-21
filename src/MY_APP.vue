@@ -59,11 +59,17 @@ html, body {
     }*/
   .Container {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 10% 90%;
     width: 100%;
-    gap: 1rem;
     padding-right: 1rem;
     border-radius: 1rem;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .left {
