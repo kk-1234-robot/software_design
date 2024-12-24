@@ -1,0 +1,30 @@
+{
+  "id": "4785242",
+  "name": "软件课设",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9059906",
+      "name": "任务",
+      "font_class": "renwu",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "42696596",
+      "name": "标注任务管理",
+      "font_class": "biaozhurenwuguanli",
+      "unicode": "e686",
+      "unicode_decimal": 59014
+    },
+    {
+      "icon_id": "2076308",
+      "name": " 首页",
+      "font_class": "shouye",
+      "unicode": "e89f",
+      "unicode_decimal": 59551
+    }
+  ]
+}
