@@ -21,4 +21,8 @@ from my_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('view_train/', views.view_train, name='view_train'),
+    path('split_sentences/', views.split_sentences, name='split_sentences'),
+    path('get_words/', views.get_words, name='get_words'),
+    path('GetSubmission/', views.get_submission, name='get_submission'),
+    path('GetTask/', views.get_task, name='get_task'),
 ]
