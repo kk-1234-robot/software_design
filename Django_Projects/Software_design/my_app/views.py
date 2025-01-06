@@ -8,6 +8,7 @@ from my_app.case_processing import split_into_sentences
 from my_app.models import Train
 import csv
 from django.core.files import File
+import pandas as pd
 
 
 # Create your views here
@@ -78,12 +79,24 @@ def get_submission(request):
 
 
 @api_view(['POST'])
-# 获取前端提交的任务数据(文件为.csv文件),并将其存入数据库中的Test表
+# 获取前端提交的任务数据(文件为.csv文件),读取文件内容并提取出每一行的数据
 def get_task(request):
     file = request.FILES['file']
-    reader = csv.reader(file)
-    for row in reader:
-        t = Train(case1=row[0], case2=row[1], case3=row[2])
-        print(t)
-        t.save()
+    print(file)
+    print(file.name)
+    print(file.size)
+    print(file.content_type)
+    print('hello')
+    # 读取文件内容
+    df = pd.read_csv(file, encoding='utf-8')
+    print(df.head(5))
+    # encodings = ['utf-8', 'gbk', 'big5', 'gb2312']
+    # for encoding in encodings:
+    #     try:
+    #         df = pd.read_csv(file, encoding=encoding)
+    #         print(df.head(5))
+    #         break
+    #     except:
+    #         continue
+
     return HttpResponse("Received", content_type="text/plain;charset=utf-8")

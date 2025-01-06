@@ -6,6 +6,7 @@
       action="http://localhost:8000/GetTask/"
       @change="handleChange"
       @drop="handleDrop"
+      accept=".csv"
   >
     <p class="ant-upload-drag-icon">
       <inbox-outlined></inbox-outlined>
