@@ -25,4 +25,6 @@ urlpatterns = [
     path('get_words/', views.get_words, name='get_words'),
     path('GetSubmission/', views.get_submission, name='get_submission'),
     path('GetTask/', views.get_task, name='get_task'),
+    path('translate_sentence/', views.translate_sentence, name='translate_sentence'),
+    path('annotation_by_llm/', views.annotation_by_llm, name='annotation_by_llm')
 ]

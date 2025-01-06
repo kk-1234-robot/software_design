@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.utils.text import normalize_newlines
 from rest_framework.decorators import api_view
 
-from my_app.case_processing import read_train_data, get_words_db
+from my_app.case_processing import *
 from my_app.case_processing import split_into_sentences
+from my_app.llm_api import *
 from my_app.models import Train
 import csv
 from django.core.files import File
@@ -63,6 +64,39 @@ def get_words(request):
             print('get_word_test')
             word = get_words_db(number, num_sentences, num_words)
             return HttpResponse(word, content_type="text/plain;charset=utf-8")
+        except ValueError:
+            return HttpResponse("invalid input number_sentence.", content_type="text/plain;charset=utf-8")
+    else:
+        return HttpResponse("Please input number_sentence, number and num_words.",
+                            content_type="text/plain;charset=utf-8")
+
+
+def translate_sentence(request):
+    number = request.GET.get('number')
+    num_sentences = request.GET.get('num_sentences')
+    if number and num_sentences:
+        try:
+            num_sentences = int(num_sentences)
+            number = int(number)
+            eng_sentence = translate_sentence_db(number, num_sentences)
+            return HttpResponse(eng_sentence, content_type="text/plain;charset=utf-8")
+        except ValueError:
+            return HttpResponse("invalid input number_sentence.", content_type="text/plain;charset=utf-8")
+    else:
+        return HttpResponse("Please input number_sentence, number and num_words.",
+                            content_type="text/plain;charset=utf-8")
+
+
+def annotation_by_llm(request):
+    number = request.GET.get('number')
+    num_sentences = request.GET.get('num_sentences')
+    if number and num_sentences:
+        try:
+            num_sentences = int(num_sentences)
+            number = int(number)
+            annotation_ai_pos(number, num_sentences)
+            annotation_ai_entity(number, num_sentences)
+            return HttpResponse("标注成功", content_type="text/plain;charset=utf-8")
         except ValueError:
             return HttpResponse("invalid input number_sentence.", content_type="text/plain;charset=utf-8")
     else:

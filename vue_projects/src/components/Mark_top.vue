@@ -2,7 +2,7 @@
   <main class="Container">
     <div class="left">
       <button> 人工标注</button>
-      <button>智能标注</button>
+      <button @click = "annotation_api" >智能标注</button>
     </div>
 
     <div class="center">
@@ -13,7 +13,7 @@
       </div>
       <div class="center_button">
         <button>分词</button>
-        <button>翻译</button>
+        <button @click = "translate_api">翻译</button>
         <button @click = "previous_sentences">上一句</button>
         <button @click="next_sentences">下一句</button>
       </div>
@@ -294,6 +294,35 @@ async function getWords()
 }
   catch (error) {
     console.error("Error fetching data:", error);
+  }
+}
+
+async function translate_api()//翻译一个句子
+{
+  loading.value = true;  // 开始加载
+  errorMessage.value = ""; // 清空错误信息
+  try {
+    const response = await axios.get("http://127.0.0.1:8000/translate_sentence/", {
+      params: {num_sentences: num_sentences.value, number: number.value},
+    });
+    subDescription2.value = response.data; // 将返回的数据绑定到 description
+  }
+  catch (error) {
+    console.error("Error fetching data:", error);
+    subDescription2.value = "获取数据失败，请稍后重试。";
+  }
+}
+
+async function annotation_api() {
+  loading.value = true;  // 开始加载
+  errorMessage.value = ""; // 清空错误信息
+  try {
+    const response = await axios.get("http://127.0.0.1:8000/annotation_by_llm/", {
+      params: {num_sentences: num_sentences.value, number: number.value},
+    });
+  }
+  catch (error) {
+    console.error("Error", error);
   }
 }
 

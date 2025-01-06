@@ -2,6 +2,7 @@ import nltk
 from my_app.models import Train, Sentences, Words
 import jieba as jb
 import re
+from .llm_api import *
 
 nltk.download('punkt')
 
@@ -80,3 +81,36 @@ def get_words_db(number, number_sentence, num_words):
     word = Words.objects.filter(sentence_id=number_sentence, article_id=number, pos_index=num_words)
     print(word)
     return word[0].word
+
+
+# 将单个句子翻译成英文
+def translate_sentence_db(number, number_sentence):
+    sentence = Sentences.objects.filter(pos_index=number_sentence, article_id=number)
+    eng_sentence = translate_by_api(sentence[0].sentence)
+    return eng_sentence
+
+
+# 把标注的结果保存到数据库中
+def save_annotation_db(annotation):
+    word = Words.objects.filter(sentence_id=annotation['num_sentences'], article_id=annotation['number'],
+                                pos_index=annotation['num_words'])
+    word = word[0]
+    word.pos = annotation['selectedA']
+    word.entity = annotation['selectedB']
+    word.save()
+
+
+def annotation_ai_pos(number, number_sentence):
+    words = Words.objects.filter(sentence_id=number_sentence, article_id=number)
+    for word in words:
+        annotation_pos = annotation_pos_by_api(word.word)
+        word.pos = annotation_pos
+        word.save()
+
+
+def annotation_ai_entity(number, number_sentence):
+    words = Words.objects.filter(sentence_id=number_sentence, article_id=number)
+    for word in words:
+        annotation_pos = annotation_entity_by_api(word.word)
+        word.entity = annotation_pos
+        word.save()
