@@ -23,6 +23,7 @@ function changeContent(content) {
     <i class="iconfont icon-font" @click="changeContent('home')">首页</i>
     <i class="iconfont icon-targets" @click="changeContent('tasks')">标注任务</i>
     <i class="iconfont icon-marking" @click="changeContent('marking')">标注</i>
+    <i class="iconfont icon-results" @click="changeContent('results')">结果</i>
   </div>
 
 

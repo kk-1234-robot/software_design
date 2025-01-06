@@ -80,7 +80,7 @@ def split_into_sentences(number, num_sentences):
 def get_words_db(number, number_sentence, num_words):
     word = Words.objects.filter(sentence_id=number_sentence, article_id=number, pos_index=num_words)
     print(word)
-    return word[0].word
+    return [word[0].word, word[0].pos, word[0].entity]
 
 
 # 将单个句子翻译成英文

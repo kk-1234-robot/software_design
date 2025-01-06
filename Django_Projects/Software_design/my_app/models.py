@@ -14,16 +14,6 @@ class Train(models.Model):
         return f"Train {self.case1, self.case2, self.case3}"
 
 
-# 一个表Test，包含了4列，分别是自增的id和case1、case2、case3
-class Test(models.Model):
-    case1 = models.TextField()
-    case2 = models.TextField()
-    case3 = models.TextField()
-
-    def __str__(self):
-        return f"Test {self.case1, self.case2, self.case3}"
-
-
 # 一个表Words，包含了5列，分别是自增的id，word，词性， 实体，出现次数
 class Words(models.Model):
     word = models.CharField(max_length=50)
@@ -57,3 +47,13 @@ class Emotion(models.Model):
 
     def __str__(self):
         return f"Emotion {self.id, self.emotion, self.count}"
+
+
+# 一个表Test，包含了4列，分别是自增的id和case1、case2、case3
+class TestCases(models.Model):
+    case1 = models.TextField()
+    case2 = models.TextField()
+    case3 = models.TextField()
+
+    def __str__(self):
+        return f"TestCases {self.case1, self.case2, self.case3}"

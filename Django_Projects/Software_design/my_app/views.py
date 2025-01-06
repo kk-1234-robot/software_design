@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.utils.text import normalize_newlines
@@ -6,7 +8,7 @@ from rest_framework.decorators import api_view
 from my_app.case_processing import *
 from my_app.case_processing import split_into_sentences
 from my_app.llm_api import *
-from my_app.models import Train
+from my_app.models import Train, TestCases
 import csv
 from django.core.files import File
 import pandas as pd
@@ -54,16 +56,22 @@ def get_words(request):
     number = request.GET.get('number')
     num_sentences = request.GET.get('num_sentences')
     num_words = request.GET.get('num_words')
-    print('get_word_test')
     if num_words and number and num_sentences:
-        print('get_word_test')
         try:
             num_sentences = int(num_sentences)
             number = int(number)
             num_words = int(num_words)
             print('get_word_test')
-            word = get_words_db(number, num_sentences, num_words)
-            return HttpResponse(word, content_type="text/plain;charset=utf-8")
+            data = get_words_db(number, num_sentences, num_words)
+            word = data[0]
+            pos = data[1]
+            entity = data[2]
+            print('word:', word)
+            print('pos:', pos)
+            print('entity:', entity)
+            data = json.dumps(data)
+            return HttpResponse(data,
+                                content_type="application/json;charset=utf-8")
         except ValueError:
             return HttpResponse("invalid input number_sentence.", content_type="text/plain;charset=utf-8")
     else:
@@ -121,16 +129,14 @@ def get_task(request):
     print(file.size)
     print(file.content_type)
     print('hello')
-    # 读取文件内容
+    # 读取文件内容,并将其中每一行中的数据存入Test表中
     df = pd.read_csv(file, encoding='utf-8')
-    print(df.head(5))
-    # encodings = ['utf-8', 'gbk', 'big5', 'gb2312']
-    # for encoding in encodings:
-    #     try:
-    #         df = pd.read_csv(file, encoding=encoding)
-    #         print(df.head(5))
-    #         break
-    #     except:
-    #         continue
+    for index, row in df.iterrows():
+        print(row['case1'])
+        case1 = row['case1']
+        case2 = row['case2']
+        case3 = row['case3']
+        t = TestCases(case1=case1, case2=case2, case3=case3)
+        t.save()
 
     return HttpResponse("Received", content_type="text/plain;charset=utf-8")

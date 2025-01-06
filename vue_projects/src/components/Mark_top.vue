@@ -1,7 +1,7 @@
 <template>
   <main class="Container">
     <div class="left">
-      <button> 人工标注</button>
+      <button @click = "annotation_human"> 人工标注</button>
       <button @click = "annotation_api" >智能标注</button>
     </div>
 
@@ -98,75 +98,10 @@
 
 
 <script lang="ts" setup>
-import {ref, watch, onMounted, reactive} from 'vue';
+import {reactive, ref, watch} from 'vue';
 import axios from "axios";
-import type {TreeSelectProps} from 'ant-design-vue';
 
 const value = ref<string>();
-const treeData = ref<TreeSelectProps['treeData']>([
-  {
-    label: '词性',
-    value: '词性',
-    children: [
-      {
-        label: '名词',
-        value: '名词',
-      },
-      {
-        label: '动词',
-        value: '动词',
-      },
-      {
-        label: '形容词',
-        value: '形容词',
-      },
-      {
-        label: '副词',
-        value: '副词',
-      },
-      {
-        label: '代词',
-        value: '代词',
-      },
-    ],
-  },
-  {
-    label: '实体',
-    value: '实体',
-    children: [
-      {
-        label: '时间',
-        value: '时间',
-      },
-      {
-        label: '地点',
-        value: '地点',
-      },
-      {
-        label: '人物',
-        value: '人物',
-      },
-    ],
-  },
-  {
-    label: '情感',
-    value: '情感',
-    children: [
-      {
-        label: '中性',
-        value: '中性',
-      },
-      {
-        label: '正面',
-        value: '正面',
-      },
-      {
-        label: '负面',
-        value: '负面',
-      },
-    ],
-  }
-]);
 watch(value, () => {
   console.log(value.value);
 });
@@ -176,7 +111,7 @@ const subDescription2 = ref(""); // 子显示文本2
 const subDescription3 = ref(""); // 子显示文本3
 const loading = ref(false); // 加载状态
 const errorMessage = ref(""); // 错误信息
-
+const is_annotation_human = ref(true); // 人工标注状态
 
 const number = ref(0);
 
@@ -187,40 +122,6 @@ const num_words = ref(0);
 const words = ref([])
 
 const DispWord = ref('')
-// 定义可选择的标注信息，视实际需求而定
-const dropdownOptions = ref([
-  // value 可以是 pos 值或 entity 值，还可以做层级子选项
-  { label: '名词(pos)', value: 'NOUN' },
-  { label: '动词(pos)', value: 'VERB' },
-  { label: '地点(entity)', value: 'LOCATION' },
-  { label: '实体(entity)', value: 'entity' },
-  // ...
-])
-
-
-
-
-
-
-// onMounted(async () => {
-//   // 1. 从后端接口获取该句子的所有分词
-//   // 假设后端返回的数据结构形如：
-//   // [
-//   //   { id: 101, word: '我', pos: 'NOUN', entity: '', count: 3 },
-//   //   { id: 102, word: '喜欢', pos: '', entity: '', count: 1 },
-//   //   ...
-//   // ]
-//   // 前端可以自行给每个对象加上 selectedAnnotations (空数组)，以便在多选下拉中存储用户的标注
-//   try {
-//     const res = await axios.get('https://localhost:8080/get_words')
-//     words.value = res.data.map(item => ({
-//       ...item,
-//       selectedAnnotations: []
-//     }))
-//   } catch (err) {
-//     console.error('获取分词数据失败: ', err)
-//   }
-// })
 
 async function submitAnnotations() {
   // 打包并发送到后端
@@ -290,7 +191,10 @@ async function getWords()
     const response = await axios.get("http://127.0.0.1:8000/get_words/", {
       params: { number: number.value,num_sentences: num_sentences.value, num_words: num_words.value},
     });
-    DispWord.value = response.data;
+    DispWord.value = response.data[0];
+    selectedOptionsA.value = [response.data[1]];
+    selectedOptionsB.value = [response.data[2]];
+
 }
   catch (error) {
     console.error("Error fetching data:", error);
@@ -316,6 +220,7 @@ async function translate_api()//翻译一个句子
 async function annotation_api() {
   loading.value = true;  // 开始加载
   errorMessage.value = ""; // 清空错误信息
+  is_annotation_human.value = false;
   try {
     const response = await axios.get("http://127.0.0.1:8000/annotation_by_llm/", {
       params: {num_sentences: num_sentences.value, number: number.value},
@@ -324,6 +229,10 @@ async function annotation_api() {
   catch (error) {
     console.error("Error", error);
   }
+}
+
+function annotation_human() {
+  is_annotation_human.value = true;
 }
 
 function next_sentences() {

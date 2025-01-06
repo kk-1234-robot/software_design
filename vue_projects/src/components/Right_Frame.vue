@@ -28,6 +28,9 @@ const props = defineProps({
       <div v-else-if="selectedContent === 'marking'">
         <Mark/>
       </div>
+      <div v-else-if="selectedContent === 'results'">
+        <p>结果</p>
+      </div>
       <div v-else>
         <p>请选择一个菜单项</p>
       </div>
