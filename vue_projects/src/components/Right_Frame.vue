@@ -3,6 +3,7 @@ import {defineProps} from 'vue';
 import Home_content from "@/components/Home_content.vue";
 import Tasks from "@/components/Tasks.vue";
 import Mark from "@/components/Mark.vue";
+import Results from "@/components/results.vue";
 
 // 从父组件接收 selectedContent
 const props = defineProps({
@@ -29,7 +30,7 @@ const props = defineProps({
         <Mark/>
       </div>
       <div v-else-if="selectedContent === 'results'">
-        <p>结果</p>
+        <results/>
       </div>
       <div v-else>
         <p>请选择一个菜单项</p>

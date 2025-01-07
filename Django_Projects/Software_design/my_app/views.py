@@ -140,3 +140,27 @@ def get_task(request):
         t.save()
 
     return HttpResponse("Received", content_type="text/plain;charset=utf-8")
+
+
+# 统计数据库中words表中的数据并返回包含各个词性（n,v,adj,prep,pron）的总数量
+def get_pos_data(request):
+    num_n = Words.objects.filter(pos='n').count()
+    num_v = Words.objects.filter(pos='v').count()
+    num_adj = Words.objects.filter(pos='adj').count()
+    num_prep = Words.objects.filter(pos='prep').count()
+    num_pron = Words.objects.filter(pos='pron').count()
+    data = [num_n, num_v, num_adj, num_prep, num_pron]
+    data = json.dumps(data)
+    print('posData:', data)
+    return HttpResponse(data, content_type="application/json;charset=utf-8")
+
+
+# 统计数据库中words表中的数据并返回各个实体(person,time,location)的数量
+def get_entity_data(request):
+    num_person = Words.objects.filter(entity='person').count()
+    num_time = Words.objects.filter(entity='time').count()
+    num_location = Words.objects.filter(entity='location').count()
+    data = [num_person, num_time, num_location]
+    data = json.dumps(data)
+    print('entityData:', data)
+    return HttpResponse(data, content_type="application/json;charset=utf-8")

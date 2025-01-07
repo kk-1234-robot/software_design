@@ -26,5 +26,7 @@ urlpatterns = [
     path('GetSubmission/', views.get_submission, name='get_submission'),
     path('GetTask/', views.get_task, name='get_task'),
     path('translate_sentence/', views.translate_sentence, name='translate_sentence'),
-    path('annotation_by_llm/', views.annotation_by_llm, name='annotation_by_llm')
+    path('annotation_by_llm/', views.annotation_by_llm, name='annotation_by_llm'),
+    path('GetPos/', views.get_pos_data, name='get_pos_data'),
+    path('GetEntity/', views.get_entity_data, name='get_entity_data'),
 ]
