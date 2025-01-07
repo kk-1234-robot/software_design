@@ -29,4 +29,5 @@ urlpatterns = [
     path('annotation_by_llm/', views.annotation_by_llm, name='annotation_by_llm'),
     path('GetPos/', views.get_pos_data, name='get_pos_data'),
     path('GetEntity/', views.get_entity_data, name='get_entity_data'),
+    path('update_case/', views.update_case, name='update_case'),
 ]

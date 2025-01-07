@@ -1,12 +1,12 @@
 <template>
   <main class="Container">
     <div class="left">
-      <button @click = "annotation_human"> 人工标注</button>
+      <button @click = "update_case"> 更新案件</button>
       <button @click = "annotation_api" >智能标注</button>
     </div>
 
     <div class="center">
-      <textarea v-model="description" rows="30" cols="30" readonly></textarea>
+      <textarea v-model="description" rows="30" cols="30"></textarea>
       <div class="center_bottom">
         <textarea v-model="subDescription1" rows="10" cols="30" readonly></textarea>
         <textarea v-model="subDescription2" rows="10" cols="30" readonly></textarea>
@@ -231,106 +231,118 @@ async function annotation_api() {
   }
 }
 
-function annotation_human() {
+async function update_case() {
   is_annotation_human.value = true;
+  try {
+    const response = await axios.post("http://localhost:8000/update_case/", {
+      text: description.value,
+      number: number.value
+    });
+    console.log('更新案件成功');
+  } catch (error) {
+    console.error("Error", error);
+  }
 }
 
-function next_sentences() {
-  num_sentences.value++;
-  num_words.value = 1;
-  fetchData_split(); // 调用获取数据函数
-}
+  function annotation_human() {
+    is_annotation_human.value = true;
+  }
 
-function previous_sentences() {
-  if (num_sentences.value > 1) {
-    num_sentences.value--;
+  function next_sentences() {
+    num_sentences.value++;
     num_words.value = 1;
     fetchData_split(); // 调用获取数据函数
   }
-}
+
+  function previous_sentences() {
+    if (num_sentences.value > 1) {
+      num_sentences.value--;
+      num_words.value = 1;
+      fetchData_split(); // 调用获取数据函数
+    }
+  }
 
 
 //上一句
-function previous_word() {
-  if (num_words.value > 1) {
-    num_words.value--;
-    getWords();
+  function previous_word() {
+    if (num_words.value > 1) {
+      num_words.value--;
+      getWords();
+    }
   }
-}
 
 //下一句
-function next_word() {
-  num_words.value++;
-  getWords();
-}
+  function next_word() {
+    num_words.value++;
+    getWords();
+  }
 
 // 初始化时获取第一份数据
-fetchData();
-
+  fetchData();
 
 
 // 控制主下拉的显隐
-const isOpen = ref(true)
+  const isOpen = ref(true)
 
 // 控制各子菜单的显隐
-const submenuOpen = reactive({
-  A: false,
-  B: false
-})
+  const submenuOpen = reactive({
+    A: false,
+    B: false
+  })
 
 // 子菜单 A 的选项
-const submenuOptionsA = ref([
-  { label: '名词', value: 'n' },
-  { label: '动词', value: 'v' },
-  { label: '形容词', value: 'adj' },
-  { label: '副词', value: 'adv' },
-  { label: '代词', value: 'pron' },
-])
+  const submenuOptionsA = ref([
+    {label: '名词', value: 'n'},
+    {label: '动词', value: 'v'},
+    {label: '形容词', value: 'adj'},
+    {label: '副词', value: 'adv'},
+    {label: '代词', value: 'pron'},
+  ])
 
 // 子菜单 B 的选项
-const submenuOptionsB = ref([
-  { label: '人物', value: 'person' },
-  { label: '时间', value: 'time' },
-  { label: '地点', value: 'location' },
-])
+  const submenuOptionsB = ref([
+    {label: '人物', value: 'person'},
+    {label: '时间', value: 'time'},
+    {label: '地点', value: 'location'},
+  ])
 
 // 用于储存已选选项的数组
-const selectedOptionsA = ref([])
-const selectedOptionsB = ref([])
+  const selectedOptionsA = ref([])
+  const selectedOptionsB = ref([])
 
 // 点击主按钮，展开/收起下拉菜单
-const toggleDropdown = () => {
-  isOpen.value = !isOpen.value
-}
+  const toggleDropdown = () => {
+    isOpen.value = !isOpen.value
+  }
 
 // 控制子菜单展开/收起
-const toggleSubmenu = (type) => {
-  submenuOpen[type] = !submenuOpen[type]
-}
+  const toggleSubmenu = (type) => {
+    submenuOpen[type] = !submenuOpen[type]
+  }
 
 // 提交所选的选项
-const submitSelection = async () => {
-  // 将子菜单 A, B 的已选项合并或分开处理都可，这里示例为合并发送
-  const payload = {
-    selectedA: selectedOptionsA.value,
-    selectedB: selectedOptionsB.value,
-    number: number.value,
-    num_sentences: num_sentences.value,
-    num_words: num_words.value
+  const submitSelection = async () => {
+    // 将子菜单 A, B 的已选项合并或分开处理都可，这里示例为合并发送
+    const payload = {
+      selectedA: selectedOptionsA.value,
+      selectedB: selectedOptionsB.value,
+      number: number.value,
+      num_sentences: num_sentences.value,
+      num_words: num_words.value
+    }
+
+    try {
+      // 使用 Axios 发送 POST 请求到 Django 后端
+      const response = await axios.post('http://localhost:8000/GetSubmission/', payload)
+
+      // 根据响应处理后续逻辑
+      console.log('后端响应：', response.data)
+    } catch (error) {
+      console.error('提交时出错:', error)
+      alert('提交失败，请重试。')
+    }
   }
 
-  try {
-    // 使用 Axios 发送 POST 请求到 Django 后端
-    const response = await axios.post('http://localhost:8000/GetSubmission/', payload)
-
-    // 根据响应处理后续逻辑
-    console.log('后端响应：', response.data)
-    alert('提交成功！')
-  } catch (error) {
-    console.error('提交时出错:', error)
-    alert('提交失败，请重试。')
-  }
-}
 
 
 </script>

@@ -117,6 +117,7 @@ def annotation_by_llm(request):
 def get_submission(request):
     payload = request.data
     print(payload)
+    save_annotation_db(payload)
     return HttpResponse("Received", content_type="text/plain;charset=utf-8")
 
 
@@ -164,3 +165,32 @@ def get_entity_data(request):
     data = json.dumps(data)
     print('entityData:', data)
     return HttpResponse(data, content_type="application/json;charset=utf-8")
+
+
+@api_view(['POST'])
+# 获取前端更新的文本以及对应的article_id，更新数据库中的Train表
+def update_case(request):
+    payload = request.data
+    text = payload['text']
+    number = payload['number']
+    n = (number - 1) // 3 + 1
+    m = number % 3
+    # 将数据库中的Train表中的对应case更新为前端提交的文本
+    train = Train.objects.get(id=n)
+    if m == 0:
+        train.case1 = text
+    elif m == 1:
+        train.case2 = text
+    elif m == 2:
+        train.case3 = text
+    train.save()
+    # 将sentence表中的对应句子删除
+    sentences = Sentences.objects.filter(article_id=number)
+    for sentence in sentences:
+        sentence.delete()
+    # 将words表中的对应单词删除
+    words = Words.objects.filter(article_id=number)
+    for word in words:
+        word.delete()
+    print('update success article_id:', number)
+    return HttpResponse("Received", content_type="text/plain;charset=utf-8")

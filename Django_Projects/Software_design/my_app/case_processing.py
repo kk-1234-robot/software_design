@@ -90,13 +90,21 @@ def translate_sentence_db(number, number_sentence):
     return eng_sentence
 
 
-# 把标注的结果保存到数据库中
+# 把标注的结果保存到数据库中,annotation是一个字典,selectedA以及selectedB是一个数组，去除其中的空字符串并分别赋值给pos和entity
 def save_annotation_db(annotation):
     word = Words.objects.filter(sentence_id=annotation['num_sentences'], article_id=annotation['number'],
                                 pos_index=annotation['num_words'])
     word = word[0]
-    word.pos = annotation['selectedA']
-    word.entity = annotation['selectedB']
+    selected_a = annotation['selectedA']
+    selected_b = annotation['selectedB']
+    for i in selected_a:
+        if i != '':
+            word.pos = i
+            break
+    for i in selected_b:
+        if i != '':
+            word.entity = i
+            break
     word.save()
 
 
@@ -104,7 +112,10 @@ def annotation_ai_pos(number, number_sentence):
     words = Words.objects.filter(sentence_id=number_sentence, article_id=number)
     for word in words:
         annotation_pos = annotation_pos_by_api(word.word)
-        word.pos = annotation_pos
+        if annotation_pos != 'other':
+            word.pos = annotation_pos
+        else:
+            word.pos = ''
         word.save()
 
 
@@ -112,5 +123,8 @@ def annotation_ai_entity(number, number_sentence):
     words = Words.objects.filter(sentence_id=number_sentence, article_id=number)
     for word in words:
         annotation_pos = annotation_entity_by_api(word.word)
-        word.entity = annotation_pos
+        if annotation_pos != 'other':
+            word.entity = annotation_pos
+        else:
+            word.entity = ''
         word.save()
