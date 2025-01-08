@@ -196,22 +196,22 @@ def update_case(request):
     return HttpResponse("Received", content_type="text/plain;charset=utf-8")
 
 
-# 将数据库中的sentence表和word表中的数据导出为.csv文件
+# 将数据库中的sentence表和word表中的数据导出为.csv文件，导出前清除原始文件中的数据
 def export_data(request):
     sentences = Sentences.objects.all()
     words = Words.objects.all()
     with open('sentences.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['id', 'sentence', 'emotion', 'translation', 'article_id', 'pos_index'])
+        writer.writerow(['sentence', 'emotion', 'translation', 'article_id', 'pos_index'])
         for sentence in sentences:
             writer.writerow(
-                [sentence.id, sentence.sentence, sentence.emotion, sentence.translation, sentence.article_id,
+                [sentence.sentence, sentence.emotion, sentence.translation, sentence.article_id,
                  sentence.pos_index])
     with open('words.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['id', 'word', 'pos', 'entity', 'count', 'article_id', 'sentence_id', 'pos_index'])
+        writer.writerow(['word', 'pos', 'entity', 'count', 'article_id', 'sentence_id', 'pos_index'])
         for word in words:
-            writer.writerow([word.id, word.word, word.pos, word.entity, word.count, word.article_id, word.sentence_id,
+            writer.writerow([word.word, word.pos, word.entity, word.count, word.article_id, word.sentence_id,
                              word.pos_index])
 
     return HttpResponse("Received", content_type="text/plain;charset=utf-8")
