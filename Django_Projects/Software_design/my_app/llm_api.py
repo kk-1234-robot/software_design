@@ -4,7 +4,7 @@ from openai import OpenAI
 # 通过API调用模型，实现中文翻译成英文
 def translate_by_api(content):
     client = OpenAI(
-        api_key="sk-jFLjtbqJgKldg4wT6DQFXu4pymFwviTRNk34w51YOUTdYeFh",
+        api_key="$API$",
         base_url="https://api.moonshot.cn/v1",
     )
 
