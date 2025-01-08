@@ -133,16 +133,15 @@ async function export_data(){
 <style scoped>
 .container {
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
   flex-direction: column;
+  width: 100%;
 }
 
 .chart {
   display: flex;
   justify-content: space-around;
-  gap: 20px;
   flex-direction: row;
+  gap: 20px;
 }
 
 button {
