@@ -32,4 +32,5 @@ urlpatterns = [
     path('GetEntity/', views.get_entity_data, name='get_entity_data'),
     path('update_case/', views.update_case, name='update_case'),
     path('export_data/', views.export_data, name='export_data'),
+    path('split_words/', views.split_words, name='split_words'),
 ]

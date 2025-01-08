@@ -205,6 +205,22 @@ def update_case(request):
     return HttpResponse("Received", content_type="text/plain;charset=utf-8")
 
 
+def split_words(request):
+    number = request.GET.get('number')
+    num_sentences = request.GET.get('num_sentences')
+    if number and num_sentences:
+        try:
+            num_sentences = int(num_sentences)
+            number = int(number)
+            sentence = split_words_db(num_sentences, number)
+            return HttpResponse(sentence, content_type="text/plain;charset=utf-8")
+        except ValueError:
+            return HttpResponse("invalid input number_sentence.", content_type="text/plain;charset=utf-8")
+    else:
+        return HttpResponse("Please input number_sentence, number and num_words.",
+                            content_type="text/plain;charset=utf-8")
+
+
 # 将数据库中的sentence表和word表中的数据导出为.csv文件，导出前清除原始文件中的数据
 def export_data(request):
     sentences = Sentences.objects.all()

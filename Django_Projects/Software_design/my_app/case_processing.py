@@ -107,6 +107,16 @@ def save_annotation_db(annotation):
     word.save()
 
 
+def split_words_db(number_sentence, number):
+    words = Words.objects.filter(sentence_id=number_sentence, article_id=number)
+    sentence = []
+    for word in words:
+        sentence.append('[')
+        sentence.append(word.word)
+        sentence.append(']')
+    return sentence
+
+
 # 通过调用llm_api.py中的函数，对指定的句子进行标注词性
 def annotation_ai_pos(number, number_sentence):
     words = Words.objects.filter(sentence_id=number_sentence, article_id=number)
