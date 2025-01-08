@@ -30,4 +30,5 @@ urlpatterns = [
     path('GetPos/', views.get_pos_data, name='get_pos_data'),
     path('GetEntity/', views.get_entity_data, name='get_entity_data'),
     path('update_case/', views.update_case, name='update_case'),
+    path('export_data/', views.export_data, name='export_data'),
 ]

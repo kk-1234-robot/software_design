@@ -1,9 +1,13 @@
 <template>
   <!-- The DOM element for ECharts -->
   <div class="container">
-    <div ref="chartPos" style="width: 400px; height: 400px;"></div>
-    <div ref="chartEntity" style="width: 400px; height: 400px;"></div>
+    <div class="chart">
+      <div ref="chartPos" style="width: 400px; height: 400px;"></div>
+      <div ref="chartEntity" style="width: 400px; height: 400px;"></div>
+    </div>
+    <button @click = "export_data" >导出数据</button>
   </div>
+
 
 </template>
 
@@ -117,6 +121,12 @@ onMounted(async () => {
     console.error('Error fetching chart data:', error);
   }
 });
+
+
+async function export_data(){
+  const response = await axios.get('http://localhost:8000/export_data/');
+  console.log(response.data);
+}
 </script>
 
 
@@ -125,5 +135,23 @@ onMounted(async () => {
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
+  flex-direction: column;
+}
+
+.chart {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-direction: row;
+}
+
+button {
+  background-color: lightskyblue;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 </style>

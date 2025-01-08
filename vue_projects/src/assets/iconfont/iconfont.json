@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "23073433",
+      "name": "RESULT_MANAGEMENT",
+      "font_class": "RESULT_MANAGEMENT",
+      "unicode": "ea1c",
+      "unicode_decimal": 59932
+    },
+    {
+      "icon_id": "15066950",
+      "name": "profile-5",
+      "font_class": "profile-5",
+      "unicode": "e6b0",
+      "unicode_decimal": 59056
+    },
+    {
       "icon_id": "9059906",
       "name": "任务",
       "font_class": "renwu",

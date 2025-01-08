@@ -1,27 +1,35 @@
 @font-face {
-    font-family: "iconfont"; /* Project id 4785242 */
-    src: url('iconfont.woff2?t=1734435624939') format('woff2'),
-    url('iconfont.woff?t=1734435624939') format('woff'),
-    url('iconfont.ttf?t=1734435624939') format('truetype');
+  font-family: "iconfont"; /* Project id 4785242 */
+  src: url('iconfont.woff2?t=1736311403309') format('woff2'),
+       url('iconfont.woff?t=1736311403309') format('woff'),
+       url('iconfont.ttf?t=1736311403309') format('truetype');
 }
 
 .iconfont {
-    font-family: "iconfont" !important;
-    font-size: 16px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-results:before {
+  content: "\ea1c";
+}
+
+.icon-profile:before {
+  content: "\e6b0";
 }
 
 .icon-targets:before {
-    content: "\e62e";
+  content: "\e62e";
 }
 
 .icon-marking:before {
-    content: "\e686";
+  content: "\e686";
 }
 
 .icon-font:before {
-    content: "\e89f";
+  content: "\e89f";
 }
 

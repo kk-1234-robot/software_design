@@ -17,7 +17,7 @@ const props = defineProps({
 <template>
   <div class="Right_Frame">
     <div class="top">
-      <i class="iconfont icon-font"></i>
+      <i class="iconfont icon-profile"></i>
     </div>
     <div class="bottom">
       <div v-if="selectedContent === 'home'">
