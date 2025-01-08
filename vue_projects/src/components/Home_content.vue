@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 展示软件使用步骤 -->
     <a-steps
         v-model:current="current"
         direction="vertical"

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from my_app import views
 
+# 这是一个URL配置文件，用于配置URL和视图之间的映射关系
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('view_train/', views.view_train, name='view_train'),

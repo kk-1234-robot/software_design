@@ -28,7 +28,7 @@ import Uploader from './Uploader.vue';
       <label for="round">轮次</label>
       <input type="text" id="round" v-model="round"/>
     </div>
-
+    <!-- 上传组件 -->
     <div class="Task_Upload">
       <Uploader/>
       <Button> 确认上传</Button>

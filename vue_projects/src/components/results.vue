@@ -5,6 +5,7 @@
       <div ref="chartPos" style="width: 400px; height: 400px;"></div>
       <div ref="chartEntity" style="width: 400px; height: 400px;"></div>
     </div>
+    <!-- Button to export data -->
     <button @click = "export_data" >导出数据</button>
   </div>
 
@@ -122,7 +123,7 @@ onMounted(async () => {
   }
 });
 
-
+//导出数据
 async function export_data(){
   const response = await axios.get('http://localhost:8000/export_data/');
   console.log(response.data);

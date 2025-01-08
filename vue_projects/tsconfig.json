@@ -1,3 +1,4 @@
+// Purpose: This file is used to configure the TypeScript compiler.
 {
   "compilerOptions": {
     "lib": [

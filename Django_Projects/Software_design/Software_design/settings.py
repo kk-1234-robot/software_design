@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
-
+# 配置跨域请求
 CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'Software_design.urls'

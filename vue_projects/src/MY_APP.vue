@@ -5,15 +5,18 @@ import Left_Frame from "./components/Left_Frame.vue";
 import Right_Frame from "./components/Right_Frame.vue";
 import {ref} from "vue";
 
+// 用于控制显示的内容
 const selectedContent = ref('home'); // 默认显示首页内容
 </script>
 
 <template>
   <body class="Container">
   <div class="left">
+    <!-- 传递 selectedContent 给 Left_Frame 组件 -->
     <Left_Frame :selectedContent="selectedContent" @update:selectedContent="selectedContent = $event"/>
   </div>
   <div class="right">
+    <!-- 传递 selectedContent 给 Right_Frame 组件 -->
     <Right_Frame :selectedContent="selectedContent"/>
   </div>
   </body>

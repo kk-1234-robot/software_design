@@ -1,11 +1,9 @@
-import nltk
 from my_app.models import Train, Sentences, Words
 import jieba as jb
 import re
 from .llm_api import *
 
-nltk.download('punkt')
-
+# 定义中文标点符号
 chinese_punctuation = "！？｡＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰–—‘’‛“”„‟…‧。"  # 注意这里添加了全角句号“。”
 
 
@@ -69,6 +67,7 @@ def save_data(case, article_id):  # 这个函数的输入是一段长文本，�
     return combined, len(combined)
 
 
+# 从数据库中取出第number个case的第num_sentences个句子
 def split_into_sentences(number, num_sentences):
     # 返回第number个case的第num_sentences个句子
     sentence = Sentences.objects.filter(article_id=number, pos_index=num_sentences)
@@ -108,6 +107,7 @@ def save_annotation_db(annotation):
     word.save()
 
 
+# 通过调用llm_api.py中的函数，对指定的句子进行标注词性
 def annotation_ai_pos(number, number_sentence):
     words = Words.objects.filter(sentence_id=number_sentence, article_id=number)
     for word in words:
@@ -119,6 +119,7 @@ def annotation_ai_pos(number, number_sentence):
         word.save()
 
 
+# 通过调用llm_api.py中的函数，对指定的句子进行标注实体
 def annotation_ai_entity(number, number_sentence):
     words = Words.objects.filter(sentence_id=number_sentence, article_id=number)
     for word in words:

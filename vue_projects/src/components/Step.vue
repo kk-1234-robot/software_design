@@ -15,6 +15,7 @@ const props = defineProps({
 
 <template>
   <div class="Step">
+    <!-- 根据 props.stepNumber 的值显示不同的样式 -->
     <div :class="['step-item', `step-item-${props.stepNumber}`]">
       <i class="iconfont icon-font">Step {{ props.stepNumber }}</i>
       <p>{{ props.stepText }}</p>

@@ -11,7 +11,7 @@ const props = defineProps({
 
 // 定义一个事件来通知父组件改变内容
 const emit = defineEmits(['update:selectedContent']);
-
+// 定义一个函数，用于改变内容
 function changeContent(content) {
   emit('update:selectedContent', content); // 触发事件，通知父组件改变 selectedContent
 }
@@ -20,6 +20,7 @@ function changeContent(content) {
 <template>
 
   <div class="Left_Frame">
+    <!-- 为每个菜单项绑定点击事件 -->
     <i class="iconfont icon-font" @click="changeContent('home')">首页</i>
     <i class="iconfont icon-targets" @click="changeContent('tasks')">标注任务</i>
     <i class="iconfont icon-marking" @click="changeContent('marking')">标注</i>

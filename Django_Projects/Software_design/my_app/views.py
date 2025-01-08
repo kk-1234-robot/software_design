@@ -32,6 +32,7 @@ def view_train(request):
         return HttpResponse("Please input number.", content_type="text/plain;charset=utf-8")
 
 
+# 通过调用split_into_sentences函数，对指定的句子进行分割
 def split_sentences(request):
     number = request.GET.get('number')
     num_sentences = request.GET.get('num_sentences')
@@ -52,6 +53,7 @@ def split_sentences(request):
         return HttpResponse("Please input number and num_sentences.", content_type="text/plain;charset=utf-8")
 
 
+# 通过调用get_words_db函数，获取指定位置的词语及对应的词性和实体
 def get_words(request):
     number = request.GET.get('number')
     num_sentences = request.GET.get('num_sentences')
@@ -79,6 +81,7 @@ def get_words(request):
                             content_type="text/plain;charset=utf-8")
 
 
+# 通过调用translate_sentence_db函数，对指定的句子进行翻译
 def translate_sentence(request):
     number = request.GET.get('number')
     num_sentences = request.GET.get('num_sentences')
@@ -95,9 +98,11 @@ def translate_sentence(request):
                             content_type="text/plain;charset=utf-8")
 
 
+# 通过调用llm_api.py中的函数，对指定的句子进行标注
 def annotation_by_llm(request):
     number = request.GET.get('number')
     num_sentences = request.GET.get('num_sentences')
+    # 调用annotation_ai_pos和annotation_ai_entity函数，对指定的句子进行标注
     if number and num_sentences:
         try:
             num_sentences = int(num_sentences)
@@ -117,6 +122,7 @@ def annotation_by_llm(request):
 def get_submission(request):
     payload = request.data
     print(payload)
+    # 将前端提交的数据保存到数据库中
     save_annotation_db(payload)
     return HttpResponse("Received", content_type="text/plain;charset=utf-8")
 
@@ -124,6 +130,7 @@ def get_submission(request):
 @api_view(['POST'])
 # 获取前端提交的任务数据(文件为.csv文件),读取文件内容并提取出每一行的数据
 def get_task(request):
+    # 获取前端提交的文件
     file = request.FILES['file']
     print(file)
     print(file.name)
@@ -145,6 +152,7 @@ def get_task(request):
 
 # 统计数据库中words表中的数据并返回包含各个词性（n,v,adj,prep,pron）的总数量
 def get_pos_data(request):
+    # 得到数据库中的词性数量
     num_n = Words.objects.filter(pos='n').count()
     num_v = Words.objects.filter(pos='v').count()
     num_adj = Words.objects.filter(pos='adj').count()
@@ -158,6 +166,7 @@ def get_pos_data(request):
 
 # 统计数据库中words表中的数据并返回各个实体(person,time,location)的数量
 def get_entity_data(request):
+    # 得到数据库中的实体数量
     num_person = Words.objects.filter(entity='person').count()
     num_time = Words.objects.filter(entity='time').count()
     num_location = Words.objects.filter(entity='location').count()
@@ -200,6 +209,7 @@ def update_case(request):
 def export_data(request):
     sentences = Sentences.objects.all()
     words = Words.objects.all()
+    # 将数据库中的sentence表和word表中的数据导出为.csv文件
     with open('sentences.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['sentence', 'emotion', 'translation', 'article_id', 'pos_index'])

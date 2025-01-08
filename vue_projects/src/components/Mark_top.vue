@@ -1,17 +1,21 @@
 <template>
   <main class="Container">
     <div class="left">
+      <!-- 左侧的更新案件按键和智能标注按键 -->
       <button @click = "update_case"> 更新案件</button>
       <button @click = "annotation_api" >智能标注</button>
     </div>
 
     <div class="center">
+      <!-- 中间的文本框 -->
       <textarea v-model="description" rows="30" cols="30"></textarea>
       <div class="center_bottom">
+        <!-- 下方的两个文本框,分别为分句和翻译 -->
         <textarea v-model="subDescription1" rows="10" cols="30" readonly></textarea>
         <textarea v-model="subDescription2" rows="10" cols="30" readonly></textarea>
       </div>
       <div class="center_button">
+        <!-- 下方的按钮 -->
         <button>分词</button>
         <button @click = "translate_api">翻译</button>
         <button @click = "previous_sentences">上一句</button>
@@ -82,6 +86,7 @@
         </div>
       </div>
       <div class="Submission_buttons">
+        <!-- 维护一个变量num_words,指示当前词的位置 -->
         <button @click="previous_word">上一个词</button>
         <button @click="next_word">下一个词</button>
       </div>
@@ -123,6 +128,7 @@ const words = ref([])
 
 const DispWord = ref('')
 
+// 提交标注信息
 async function submitAnnotations() {
   // 打包并发送到后端
   // 后端根据 id 来更新对应 word 的标注信息
@@ -141,6 +147,7 @@ async function submitAnnotations() {
   }
 }
 
+// 获取案件数据，number为案件编号
 async function fetchData() {
   loading.value = true;  // 开始加载
   errorMessage.value = ""; // 清空错误信息
@@ -155,11 +162,13 @@ async function fetchData() {
   }
 }
 
+//  获取下一份案件数据
 function next() {
   number.value++;
   fetchData(); // 调用获取数据函数
 }
 
+//  获取上一份案件数据
 function previous() {
   if (number.value > 1) {
     number.value--;
@@ -167,7 +176,7 @@ function previous() {
   }
 }
 
-
+//获取指定案件编号的指定序号的句子
 async function fetchData_split() {
   loading.value = true;  // 开始加载
   errorMessage.value = ""; // 清空错误信息
@@ -183,6 +192,7 @@ async function fetchData_split() {
   }
 }
 
+//获取指定案件编号的指定序号的句子的指定序号的词
 async function getWords()
 {
   loading.value = true;  // 开始加载
@@ -201,6 +211,7 @@ async function getWords()
   }
 }
 
+//翻译一个句子
 async function translate_api()//翻译一个句子
 {
   loading.value = true;  // 开始加载
@@ -217,6 +228,7 @@ async function translate_api()//翻译一个句子
   }
 }
 
+//智能标注
 async function annotation_api() {
   loading.value = true;  // 开始加载
   errorMessage.value = ""; // 清空错误信息
@@ -231,6 +243,7 @@ async function annotation_api() {
   }
 }
 
+//  人工修改更新案件
 async function update_case() {
   is_annotation_human.value = true;
   try {
@@ -247,13 +260,13 @@ async function update_case() {
   function annotation_human() {
     is_annotation_human.value = true;
   }
-
+//下一句
   function next_sentences() {
     num_sentences.value++;
     num_words.value = 1;
     fetchData_split(); // 调用获取数据函数
   }
-
+  //上一句
   function previous_sentences() {
     if (num_sentences.value > 1) {
       num_sentences.value--;

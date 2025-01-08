@@ -16,10 +16,12 @@ const props = defineProps({
 
 <template>
   <div class="Right_Frame">
+    <!-- 顶部区域 -->
     <div class="top">
       <i class="iconfont icon-profile"></i>
     </div>
     <div class="bottom">
+      <!-- 根据 selectedContent 的值显示不同的内容 -->
       <div v-if="selectedContent === 'home'">
         <Home_content/>
       </div>
@@ -33,6 +35,7 @@ const props = defineProps({
         <results/>
       </div>
       <div v-else>
+        <!-- 如果没有选择任何菜单项，则显示提示信息 -->
         <p>请选择一个菜单项</p>
       </div>
     </div>
